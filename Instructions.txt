@@ -1,0 +1,154 @@
+
+AlphaRTC Experiment Instructions
+
+############
+# 0. Files #
+############
+
+# This file
+Instructions.txt
+
+# Sample send & receive scripts
+receive.sh
+send.sh
+
+# Sample send & receive config files
+receiver_pyinfer.json
+sender_pyinfer.json
+
+# script to set up network
+# config and port forwarding
+setup_network.sh
+
+# script to run dynamic traffic
+# shaping on the network
+updateLink.py
+
+#########################
+# 1. Network Interfaces #
+#########################
+
+To set up local network, run `sudo setup_network.sh`
+
+The following commands can be used to validate the environment:
+
+`sudo ip link show`		# output should include br0, veth1, veth2
+`sudo ip netns list`	# output should include ns1, ns2
+
+`sudo iptables -t nat -nvL`
+# output should show POSTROUTING Masquerade rule for traffic from
+# 10.10.0.0/16 (bridge IP) to non-bridge destination ("!br0")
+
+#########################
+# 2. Docker Environment #
+#########################
+
+To confirm the environment, run `docker image ls`
+# should see repository "opennetlab.azurecr.io/challenge-env" for hosted docker
+# should see repository "alphartc" for local build
+
+# To reload docker, see the project documentation #
+
+# Hosted Docker Instructions
+https://github.com/OpenNetLab/Challenge-Example
+
+# Local Docker Build
+https://github.com/OpenNetLab/AlphaRTC	
+
+#######################
+# 3. Experiment Setup #
+#######################
+
+
+At a minimum the experiment directry should contain BandwidthEstimator.py,
+Audio/Video test files, and json config files for sender and receiver.
+
+See Challenge-Example for details:
+https://github.com/OpenNetLab/Challenge-Example
+
+The "Sender" config should include the following
+in the "serverless_connection" block to send to the bridge
+
+"sender": {
+    "enabled": true,
+    "dest_ip": "10.10.0.1", // bridge IP
+    "dest_port": 8888
+}
+
+The "Receiver" config should include the following
+in the "serverless_connection" block to listen on the bridge
+
+ "receiver": {
+     "enabled": true,
+     "listening_ip": "10.10.0.1", // bridge IP
+     "listening_port": 8888
+}
+
+#########################
+# 4. Run The Experiment #
+#########################
+
+Open two (2) terminals and navigate to the experiment directory.
+
+1. Execute the receiver from the first namespace:
+
+The base command for the receiver is:
+docker run -d --network=host --rm -v `pwd`:/app -w /app --name alphartc_pyinfer opennetlab.azurecr.io/challenge-env peerconnection_serverless <receiver config>
+
+This command can be stored in a shell script, or assigned to a variable
+To make it easier to run from the namespace
+
+For example
+receive="docker run -d --network=host --rm -v `pwd`:/app -w /app --name alphartc_pyinfer opennetlab.azurecr.io/challenge-env peerconnection_serverless receiver_pyinfer.json"
+sudo ip netns exec ns1 $receive
+
+or
+
+sudo ip netns exec ns1 receive.sh 	# where receive.sh executes the base receive command
+
+
+
+2. Execute the sender from the second namespace
+
+The base command for the receiver is:
+docker exec alphartc_pyinfer peerconnection_serverless <sender config>
+
+This can be executed from the other namespace, using the same technique as step 1 above.
+
+For example:
+send="docker exec alphartc_pyinfer peerconnection_serverless sender_pyinfer.json"
+sudo ip netns exec ns2 $send
+
+or
+
+sudo ip netns exec ns2 send.sh	# where send.sh executes the base send command
+
+######################
+# 5. Traffic Shaping #
+######################
+
+To perform dynamic traffic shaping during experiment,
+prepare a trace file, where each line is a kbit value to set
+as the maximum banwidth value. The script will loop over the
+lines in the file for a set amount of time, modifying the
+bandwidth every n miliseconds (this value is set in the script).
+
+To run the TC process, execute the script as:
+`sudp updateLink.py <traceFile.txt>
+
+
+#####################
+# 6. Logging Output #
+#####################
+
+The BandwidthEstimator.py file can include commands
+to log values from the get_estimated_bandwidth() function
+
+In it's simplest form, this could look like:
+
+# log Python estimated bandwidth results
+f = open("estimates.txt", "a")
+f.write("Receiving Rate: " + str(receiving_rate)+"\n")
+f.write("Delay: " + str(delay)+"\n")
+f.write("Loss Ratio: " + str(loss_ratio)+"\n")
+f.close()
