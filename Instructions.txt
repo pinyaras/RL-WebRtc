@@ -84,6 +84,10 @@ in the "serverless_connection" block to listen on the bridge
      "listening_port": 8888
 }
 
+To adjust the duration of the test run, set the
+"autoclose" value in each config file to the number
+of seconds to run. If autoclose=0 it runs continuously.
+
 #########################
 # 4. Run The Experiment #
 #########################
@@ -134,7 +138,7 @@ lines in the file for a set amount of time, modifying the
 bandwidth every n miliseconds (this value is set in the script).
 
 To run the TC process, execute the script as:
-`sudp updateLink.py <traceFile.txt>
+`sudo updateLink.py <traceFile.txt>
 
 
 #####################
@@ -148,7 +152,27 @@ In it's simplest form, this could look like:
 
 # log Python estimated bandwidth results
 f = open("estimates.txt", "a")
-f.write("Receiving Rate: " + str(receiving_rate)+"\n")
+f.write("ReceivingRate: " + str(receiving_rate)+"\n")
 f.write("Delay: " + str(delay)+"\n")
-f.write("Loss Ratio: " + str(loss_ratio)+"\n")
+f.write("LossRatio: " + str(loss_ratio)+"\n")
+f.write("BandwidthEstimate: " + str(bandwidthEstimate)+"\n")
 f.close()
+
+#####################
+# 7. Generate Plots #
+#####################
+
+The file "genPlots.py" is a work in progress template.
+
+The current iteration compares the results of two files,
+designated here as "GCC.log" and "RL.log", as well as trace
+data in a file called "TestCapacity.txt".
+
+Each log file assumes record blocks in the format described in Section 6:
+
+ReceivingRate: <value>
+Delay: <value>
+LossRatio: <value>
+BandwidthEstimate: <value>
+
+This will generate comparison plots for each of the metrics.
