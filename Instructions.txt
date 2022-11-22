@@ -24,6 +24,9 @@ setup_network.sh
 # shaping on the network
 updateLink.py
 
+# template script to generate plots
+genPlots.py
+
 #########################
 # 1. Network Interfaces #
 #########################
