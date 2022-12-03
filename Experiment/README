@@ -1,1 +1,33 @@
-stub for Experiment README
+
+####################
+# Experiment Steps #
+####################
+
+This process describes collecting
+and comparing outputs from two
+AlphaRTC Bandwidth Estimators
+
+Gemini
+/home/lab/dev/rl_vdo/Gemini/submitted_code
+
+HRCC
+/home/lab/dev/rl_vdo/HRCC
+
+Each environment is set up with the appropriate
+config files, bash scripts, and input media files
+
+The BandwidthEstimator.py files have also been modified
+To log outputs needed for generating the plots.
+
+Run each experiment as described in the Demo section.
+
+When finished, collect the output files and send them
+as inputs to genPlots.py
+
+pythomn genPlots.py /path/to/logfiles
+
+For testing purposes, the genPlots.py expects a path as input
+That path should contain two AlphaRTC output files to be compared
+
+For now these are hard-coded as "GCC.log" and "RL.log"
+The trace file is also expected, currently hard-coded as "TestCapacity.txt"
