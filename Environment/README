@@ -1,1 +1,31 @@
-stub for Environment README
+Environment Setup For AlphaRTC
+
+#########################
+# 1. Docker Environment #
+#########################
+
+# Pull the docker image of challenge environment
+docker pull opennetlab.azurecr.io/challenge-env
+
+# To confirm Docker container has been pulled
+docker image ls
+
+# The output should include "opennetlab.azurecr.io/challenge-env"
+
+# See Challenge-Example for details
+https://github.com/OpenNetLab/Challenge-Example
+
+#########################
+# 2. Network Interfaces #
+#########################
+
+To set up local network, run `sudo setup_network.sh`
+
+The following commands can be used to validate the environment:
+
+sudo ip link show     # output should include br0, veth1, veth2
+sudo ip netns list    # output should include ns1, ns2
+
+sudo iptables -t nat -nvL
+# output should show POSTROUTING Masquerade rule for traffic from
+# 10.10.0.0/16 (bridge IP) to non-bridge destination ("!br0")
