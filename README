@@ -1,0 +1,8 @@
+AlphaRTC Experiment Pipeline
+
+
+Environment contains instructions for preparing the local network namespace configuration
+
+Demo contains instructions for testing AlphaRTC using the Challenge-Example repository
+
+Experiment contains details for running an AlphaRTC experiment
