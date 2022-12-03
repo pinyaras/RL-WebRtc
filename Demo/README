@@ -1,1 +1,54 @@
-Stub for Demo README
+
+#################
+# AlphaRTC Demo #
+#################
+
+The "Challenge Example" can be used to test the AlphaRTC Pipeline
+
+# Challenge-Example Docs
+https://github.com/OpenNetLab/Challenge-Example
+
+# Lab Server Path
+/home/lab/dev/rl_vdo/Challenge-Example
+
+#########
+# Setup #
+#########
+
+Config settings
+
+	Sender "dest_ip" and Recevier "listening_ip" must be the same
+	For local test use 0.0.0.0
+	For netns test use bridge IP (br0) 10.10.0.1
+
+######################
+# Run The Experiment #
+######################
+
+The commands described in the Challenge-Example documentation
+have been included here as two bash scripts "send" and "receive"
+
+The receiver and the sender should be launched in separate windows.
+The receiver must be running in order for the sender to operate.
+
+# For local test
+./receive
+./send
+
+# For netns test
+sudo ip netns exec ns1 ./receive
+sudo ip netns exec ns2 ./send
+
+# To run with Linux TC, launch the TC Link script
+# In a separate window, with a specified trace fil
+sudo updateLink.py <traceFile.txt>
+
+# NOTE: The default setting for updateLink.py is
+# to apply rules on br0. This can be changed by modifying
+# the device(s) defined in the "sw_lists" variable 
+
+A sample trace file has been included here for demo purposes
+4G_700k_trace.txt
+
+This file contains values extracted from Gemini
+new_version2_4G_700kbps_1_trace.json

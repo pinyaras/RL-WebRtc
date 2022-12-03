@@ -1,0 +1,3 @@
+#! /usr/bin/env bash
+
+docker exec alphartc_pyinfer peerconnection_serverless sender_pyinfer.json
