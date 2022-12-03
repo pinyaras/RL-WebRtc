@@ -3,9 +3,12 @@
 # Experiment Steps #
 ####################
 
-This process describes collecting
-and comparing outputs from two
-AlphaRTC Bandwidth Estimators
+This example experiment compares results
+For two sets of outputs and trace file
+
+################
+# Repositories #
+################
 
 Gemini
 /home/lab/dev/rl_vdo/Gemini/submitted_code
@@ -19,12 +22,19 @@ config files, bash scripts, and input media files
 The BandwidthEstimator.py files have also been modified
 To log outputs needed for generating the plots.
 
-Run each experiment as described in the Demo section.
+Run each experiment as described in the Demo section to
+generate the "results.csv" output file.
 
-When finished, collect the output files and send them
-as inputs to genPlots.py
+####################
+# Generating Plots #
+####################
 
-pythomn genPlots.py /path/to/logfiles
+[STATUS: IN PROGRESS]
+- collect the output files and trace data
+- rename files for script input
+
+# run script with path to log/trace files
+python genPlots.py /path/to/files
 
 For testing purposes, the genPlots.py expects a path as input
 That path should contain two AlphaRTC output files to be compared
