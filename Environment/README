@@ -19,9 +19,10 @@ https://github.com/OpenNetLab/Challenge-Example
 # 2. Network Interfaces #
 #########################
 
-To set up local network, run `sudo setup_network.sh`
+# To set up local network
+sudo setup_network.sh
 
-The following commands can be used to validate the environment:
+# The following commands can be used to validate the environment:
 
 sudo ip link show     # output should include br0, veth1, veth2
 sudo ip netns list    # output should include ns1, ns2
