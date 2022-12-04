@@ -6,3 +6,5 @@ Environment contains instructions for preparing the local network namespace conf
 Demo contains instructions for testing AlphaRTC using the Challenge-Example repository
 
 Experiment contains details for running an AlphaRTC experiment
+
+Media contains scripts for working with audio and video files
