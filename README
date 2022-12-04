@@ -8,3 +8,5 @@ Demo contains instructions for testing AlphaRTC using the Challenge-Example repo
 Experiment contains details for running an AlphaRTC experiment
 
 Media contains scripts for working with audio and video files
+
+Metrics contains scripts related to QoS/QoE metrics
