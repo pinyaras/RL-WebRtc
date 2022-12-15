@@ -6,6 +6,14 @@
 This example experiment compares results
 For two sets of outputs and trace file
 
+#########
+# Setup #
+#########
+
+Adjust the 'autoclose' value in both
+config files to change the duration
+that the app will run.
+
 ################
 # Repositories #
 ################
