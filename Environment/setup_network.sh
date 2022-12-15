@@ -87,4 +87,3 @@ bash -c 'echo 1 > /proc/sys/net/ipv4/ip_forward'
 
 # allow traffic accross bridge outside containers
 iptables -t nat -A POSTROUTING -s ${BR_ADDR}/16 ! -o ${BR_DEV} -j MASQUERADE
-iptables -t nat -A POSTROUTING -s 10.10.0.1/16 ! -o br0 -j MASQUERADE
