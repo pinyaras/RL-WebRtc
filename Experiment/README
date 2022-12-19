@@ -18,11 +18,13 @@ that the app will run.
 # Repositories #
 ################
 
-Gemini
-/home/lab/dev/rl_vdo/Gemini/submitted_code
+Repositories (Challenge-Example, HRCC, Gemini)
 
-HRCC
-/home/lab/dev/rl_vdo/HRCC
+# Lab Server
+/home/lab/dev/rl_vdo
+
+# Winslab Server
+/home/champ/dev/rl_vdo
 
 Each environment is set up with the appropriate
 config files, bash scripts, and input media files
@@ -32,6 +34,26 @@ To log outputs needed for generating the plots.
 
 Run each experiment as described in the Demo section to
 generate the "results.csv" output file.
+
+##########################
+# Local Vs. Network Test #
+##########################
+
+For local testing, both receiver and sender use the same Docker container
+
+# receiver
+docker run -d --network=host --rm -v `pwd`:/app -w /app --name alphartc_pyinfer opennetlab.azurecr.io/challenge-env peerconnection_serverless receiver_pyinfer.json
+
+# sender
+docker exec alphartc_pyinfer peerconnection_serverless sender_pyinfer.json
+
+For network testing, receiver and sender each use the sever's local Docker container
+
+# receiver
+docker run -d --network=host --rm -v  `pwd`:/app -w /app --name alphartc_pyinfer opennetlab.azurecr.io/challenge-env peerconnection_serverless receiver_pyinfer.json
+
+# sender
+docker run -d --network=host --rm -v  `pwd`:/app -w /app --name alphartc_pyinfer opennetlab.azurecr.io/challenge-env peerconnection_serverless sender_pyinfer.json
 
 ####################
 # Generating Plots #
