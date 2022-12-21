@@ -1,1 +1,34 @@
-Scripts for working with audio/video files
+
+###########
+# Scripts #
+###########
+
+To extract resolution and frame rate from mp4 video:
+python getVideoInfo.py <file.mp4>
+
+To convert mp4 to yuv:
+`ffmpeg -i file.mp4 file.yuv`
+
+################
+# Sample Files #
+################
+
+The following files are currently loaded
+on lab and winslab servers:
+
+# DEMO FILE #
+
+See Challenge-Example for details
+https://github.com/OpenNetLab/Challenge-Example
+
+test.yuv	240x320	10 FPS
+
+# TEST FILES #
+
+Source:
+https://file-examples.com/index.php/sample-video-files/sample-mp4-files/
+
+file_example_MP4_480_1_5MG.yuv	480x270		30fps
+file_example_MP4_640_3MG.yuv	640x360		30fps
+file_example_MP4_1280_10MG.yuv	1280x720	30fps
+file_example_MP4_1920_18MG.yuv	1920x1080	30fps
