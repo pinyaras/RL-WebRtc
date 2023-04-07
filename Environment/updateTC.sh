@@ -1,24 +1,25 @@
 #! /usr/bin/env bash
 
-# inspired by
-# https://joshrosso.com/docs/2020/2020-09-16-tc/
+##################################################
+# Traffic shaping method inspired by             #
+# https://joshrosso.com/docs/2020/2020-09-16-tc/ #
+##################################################
 
-# tc utility
-TC=/sbin/tc
+##############
+# PARAMETERS #
+##############
 
-# interface
-IF=veth1
+TC=/sbin/tc             # tc utility
+IF=veth1                # interface
+LIMIT=100mbit           # rate limit (NOTE: this could be changed to user input)
+DST_CIDR=10.10.0.10/32  # destination IP
+U32="$TC filter add dev $IF protocol ip parent 1:0 prio 1 u32"  # filter template
 
-# limit
-LIMIT=100mbit
+#############
+# FUNCTIONS #
+#############
 
-# destination
-DST_CIDR=10.10.0.10/32
-
-# filter
-U32="$TC filter add dev $IF protocol ip parent 1:0 prio 1 u32"
-
-# create rules
+# Create the tc rules
 create() {
     echo "== SHAPING INIT =="
 
@@ -36,13 +37,16 @@ create() {
     echo "== SHAPING DONE =="
 }
 
-# erase existing qdisc
+# Erase existing qdisc
 clean() {
     echo "== REMOVING EXISTING QDISC =="
     $TC qdisc del dev $IF root
     echo "== CLEANUP COMPLETE =="
 }
 
-# run it
-clean
-create
+##############
+# MAIN SCOPE #
+##############
+
+clean   # run the clean function to remove existing qdisc definitions
+create  # run the create function to create a new qdisc hierarchy
