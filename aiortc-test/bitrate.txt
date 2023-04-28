@@ -1,0 +1,4 @@
+Target FPS: 30
+Target Bitrate: 16000
+Updated encoder bitrate: 100000
+Bitrate target: 16000 / 100000
